@@ -6,6 +6,7 @@ import (
 	"go-fiber-gorm/database"
 	"go-fiber-gorm/model/entity"
 	"go-fiber-gorm/model/request"
+	"go-fiber-gorm/utils"
 	"log"
 )
 
@@ -44,6 +45,16 @@ func UserHandlerCreate(ctx *fiber.Ctx) error {
 		Address: user.Address,
 		Phone:   user.Phone,
 	}
+
+	hashedPassword, err := utils.HashingPassword(user.Password)
+	if err != nil {
+		log.Println(err)
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "internal server error",
+		})
+	}
+
+	newUser.Password = hashedPassword
 
 	errCreateUser := database.DB.Create(&newUser).Error
 	if errCreateUser != nil {
@@ -127,15 +138,15 @@ func UserHandlerUpdate(ctx *fiber.Ctx) error {
 func UserHandlerDelete(ctx *fiber.Ctx) error {
 	userId := ctx.Params("id")
 	var user entity.User
+
 	//	CHECK AVAILABLE USER
-	err := database.DB.Debug().First(&user, "id = ?", userId).Error
+	err := database.DB.Debug().First(&user, "id=?", userId).Error
 	if err != nil {
 		return ctx.Status(404).JSON(fiber.Map{
 			"message": "user not found",
 		})
 	}
 
-	//	DELETE USER DATA
 	errDelete := database.DB.Debug().Delete(&user).Error
 	if errDelete != nil {
 		return ctx.Status(500).JSON(fiber.Map{
