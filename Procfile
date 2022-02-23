@@ -1,1 +1,1 @@
-web: bin/go-fiber-gorm
+web: go-fiber-gorm
