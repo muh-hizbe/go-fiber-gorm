@@ -17,7 +17,8 @@ func DatabaseInit() {
 	//DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	//	USING POSTGRESQL
-	const POSTGRESQL = "postgresql://postgres:@localhost:5432/go_fiber_gorm?sslmode=disable&TimeZone=Asia/Jakarta"
+	//const POSTGRESQL = "postgresql://postgres:@localhost:5432/go_fiber_gorm?sslmode=disable&TimeZone=Asia/Jakarta"
+	const POSTGRESQL = "postgres://dltummspuwbpxp:f126da1dedd437c3dd5810a26906a26a87c6707255adec077a852f385259d767@ec2-34-194-14-176.compute-1.amazonaws.com:5432/d85vsfdt0o0quq"
 	dsn := POSTGRESQL
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
