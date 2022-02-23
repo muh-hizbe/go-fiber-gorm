@@ -5,6 +5,8 @@ import (
 	"go-fiber-gorm/database"
 	"go-fiber-gorm/database/migration"
 	"go-fiber-gorm/route"
+	"log"
+	"os"
 )
 
 func main() {
@@ -18,5 +20,9 @@ func main() {
 	// INITIAL ROUTE
 	route.RouteInit(app)
 
-	app.Listen(":8080")
+	errListen := app.Listen(":8080")
+	if errListen != nil {
+		log.Println("Fail to listen go fiber server")
+		os.Exit(1)
+	}
 }
