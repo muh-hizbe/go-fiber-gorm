@@ -2,14 +2,14 @@ package route
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"go-fiber-gorm/config"
+	// "go-fiber-gorm/config"
 	"go-fiber-gorm/handler"
 	"go-fiber-gorm/middleware"
 	"go-fiber-gorm/utils"
 )
 
 func RouteInit(r *fiber.App) {
-	r.Static("/public", config.ProjectRootPath+"/public")
+	r.Static("/public", "/public")
 
 	r.Post("/login", handler.LoginHandler)
 
