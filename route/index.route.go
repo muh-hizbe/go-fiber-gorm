@@ -9,7 +9,7 @@ import (
 )
 
 func RouteInit(r *fiber.App) {
-	r.Static("/public", config.ProjectRootPath+"/public/asset")
+	r.Static("/public", config.ProjectRootPath+"/public")
 
 	r.Post("/login", handler.LoginHandler)
 
