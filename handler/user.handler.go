@@ -12,6 +12,10 @@ import (
 
 func UserHandlerGetAll(ctx *fiber.Ctx) error {
 	var users []entity.User
+
+	//userInfo := ctx.Locals("userInfo").(jwt.MapClaims)
+	//log.Println("email :: ", userInfo["email"])
+
 	result := database.DB.Debug().Find(&users)
 	if result.Error != nil {
 		log.Println(result.Error)

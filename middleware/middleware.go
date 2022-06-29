@@ -3,6 +3,7 @@ package middleware
 import (
 	"github.com/gofiber/fiber/v2"
 	"go-fiber-gorm/utils"
+	"log"
 )
 
 func Auth(ctx *fiber.Ctx) error {
@@ -15,6 +16,7 @@ func Auth(ctx *fiber.Ctx) error {
 
 	claims, err := utils.DecodeToken(token)
 	if err != nil {
+		log.Println("err :: ", err)
 		return ctx.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"message": "unauthenticated",
 		})

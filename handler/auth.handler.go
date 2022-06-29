@@ -51,7 +51,7 @@ func LoginHandler(ctx *fiber.Ctx) error {
 	claims["name"] = user.Name
 	claims["email"] = user.Email
 	claims["address"] = user.Address
-	claims["exp"] = time.Now().Add(time.Minute * 2).Unix()
+	claims["exp"] = time.Now().Add(time.Minute * 24).Unix()
 
 	if user.Email == "john@gmail.com" {
 		claims["role"] = "admin"

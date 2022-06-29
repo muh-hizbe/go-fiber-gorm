@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"go-fiber-gorm/database"
 	"go-fiber-gorm/database/migration"
 	"go-fiber-gorm/route"
 	"log"
 	"os"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8000"
+		port = "8080"
 	}
 
 	errListen := app.Listen(":" + port)
