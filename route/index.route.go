@@ -1,7 +1,7 @@
 package route
 
 import (
-	"go-fiber-gorm/config"
+	// "go-fiber-gorm/config"
 	"go-fiber-gorm/handler"
 	"go-fiber-gorm/middleware"
 	"go-fiber-gorm/utils"
