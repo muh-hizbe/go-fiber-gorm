@@ -10,7 +10,7 @@ import (
 )
 
 func RouteInit(r *fiber.App) {
-	r.Static("/public", "public")
+	r.Static("/public", "./public")
 
 	r.Post("/login", handler.LoginHandler)
 
