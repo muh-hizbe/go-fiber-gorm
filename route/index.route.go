@@ -10,8 +10,8 @@ import (
 )
 
 func RouteInit(r *fiber.App) {
-	r.Static("/public", config.ProjectRootPath+"/public")
-	r.Static("/public", "./public") // untuk heroku gunakan ini
+	r.Static("/public", config.ProjectRootPath+"/public") // untuk alternative path jikalau path dibawah tidak terbaca
+	r.Static("/public", "./public")                       // gunakan ini terlebih dahulu
 
 	r.Post("/login", handler.LoginHandler)
 
