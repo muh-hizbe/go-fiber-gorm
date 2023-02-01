@@ -1,9 +1,10 @@
 package middleware
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"go-fiber-gorm/utils"
 	"log"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func Auth(ctx *fiber.Ctx) error {
@@ -29,7 +30,7 @@ func Auth(ctx *fiber.Ctx) error {
 		})
 	}
 
-	//ctx.Locals("userInfo", claims)
+	// ctx.Locals("userInfo", claims)
 
 	return ctx.Next()
 }

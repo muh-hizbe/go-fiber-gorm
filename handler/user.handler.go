@@ -1,13 +1,14 @@
 package handler
 
 import (
-	"github.com/go-playground/validator/v10"
-	"github.com/gofiber/fiber/v2"
 	"go-fiber-gorm/database"
 	"go-fiber-gorm/model/entity"
 	"go-fiber-gorm/model/request"
 	"go-fiber-gorm/utils"
 	"log"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
 )
 
 func UserHandlerGetAll(ctx *fiber.Ctx) error {
@@ -125,6 +126,51 @@ func UserHandlerUpdate(ctx *fiber.Ctx) error {
 	}
 	user.Address = userRequest.Address
 	user.Phone = userRequest.Phone
+
+	errUpdate := database.DB.Save(&user).Error
+	if errUpdate != nil {
+		return ctx.Status(500).JSON(fiber.Map{
+			"message": "internal server error",
+		})
+	}
+
+	return ctx.JSON(fiber.Map{
+		"message": "success",
+		"data":    user,
+	})
+}
+
+func UserHandlerUpdateEmail(ctx *fiber.Ctx) error {
+	userRequest := new(request.UserEmailRequest)
+	if err := ctx.BodyParser(userRequest); err != nil {
+		return ctx.Status(400).JSON(fiber.Map{
+			"message": "bad request",
+		})
+	}
+
+	var user entity.User
+	var isEmailUserExist entity.User
+
+	userId := ctx.Params("id")
+	// CHECK AVAILABLE USER
+	err := database.DB.First(&user, "id = ?", userId).Error
+	if err != nil {
+		return ctx.Status(404).JSON(fiber.Map{
+			"message": "user not found",
+		})
+	}
+
+	// CHECK AVAILABLE EMAIL
+
+	errCheckEmail := database.DB.First(&isEmailUserExist, "email = ?", userRequest.Email).Error
+	if errCheckEmail == nil {
+		return ctx.Status(402).JSON(fiber.Map{
+			"message": "email already used.",
+		})
+	}
+
+	// UPDATE USER DATA
+	user.Email = userRequest.Email
 
 	errUpdate := database.DB.Save(&user).Error
 	if errUpdate != nil {
